@@ -1,0 +1,5 @@
+##
+## couchdb_api
+##
+
+http://docs.couchdb.org/en/2.1.0/intro/api.html

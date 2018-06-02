@@ -1,0 +1,124 @@
+##
+## couchdb
+##
+
+
+
+http://docs.couchdb.org/en/latest/intro/tour.html
+
+
+//
+//GET request to a CouchDB instance.
+//
+$ curl http://127.0.0.1:5984/
+
+{"couchdb":"Welcome",
+ "uuid":"eba2dec5a76c2d359b958ce004f52aaa",
+ "version":"1.6.1",
+ "vendor":
+    {"version":"1.6.1",
+     "name":"The Apache Software Foundation"
+    }
+}
+
+
+///
+///  Show a list of databases:
+///
+$ C:\Users\ykessler>curl -X GET http://127.0.0.1:5984/_all_dbs
+
+  ["_replicator","_users","phone_list","test_suite_db","test_suite_db2"]
+
+
+///
+///Show every last detail that goes over the wire
+///
+$ curl -vX GET http://127.0.0.1:5984/_all_dbs
+
+*   Trying 127.0.0.1...
+* Connected to 127.0.0.1 (127.0.0.1) port 5984 (#0)
+> GET /_all_dbs HTTP/1.1
+> User-Agent: curl/7.41.0
+> Host: 127.0.0.1:5984
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Server: CouchDB/1.6.1 (Erlang OTP/R16B02)
+< Date: Tue, 23 Jun 2015 11:10:09 GMT
+< Content-Type: text/plain; charset=utf-8
+< Content-Length: 71
+< Cache-Control: must-revalidate
+<
+["_replicator","_users","phone_list","test_suite_db","test_suite_db2"]
+* Connection #0 to host 127.0.0.1 left intact
+
+
+//
+//--!--
+//JavaScript Object Notation (JSON), the data format CouchDB speaks.
+//JSON is a lightweight data interchange format based on JavaScript syntax.
+//Because JSON is natively compatible with JavaScript, your web browser is an ideal client for CouchDB.
+//
+//Brackets ([]) represent ordered lists, and curly braces ({}) represent key/value dictionaries.
+//Keys must be strings, delimited by quotes ("), and values can be
+//strings, numbers, booleans, lists, or key/value dictionaries.
+///????////For a more detailed description of JSON, see Appendix E, JSON Primer.
+
+
+//
+//create a database:
+//
+$ curl -X PUT http://127.0.0.1:5984/baseball
+
+{"ok":true}
+
+$ curl -X PUT http://127.0.0.1:5984/phones
+
+{"ok":true}
+
+
+//
+//create a database again:
+//
+$ curl -X PUT http://127.0.0.1:5984/baseball
+
+{"error":"file_exists","reason":"The database could not be created, the file already exists."}
+
+
+//
+// create a database again:
+//
+$ curl -X PUT http://127.0.0.1:5984/plankton
+
+{"ok":true}
+
+
+//
+// Show a list of databases:
+//
+$ curl -X GET http://127.0.0.1:5984/_all_dbs
+
+["_replicator","_users","baseball","phone_list","phones","plankton","test_suite_db","test_suite_db2"]
+
+
+//
+// erase database
+//
+$ curl -X DELETE http://127.0.0.1:5984/plankton
+
+{"ok":true}
+
+
+//
+// Show a list of databases:
+//
+$ curl -X GET http://127.0.0.1:5984/_all_dbs
+
+["_replicator","_users","baseball","phone_list","phones","test_suite_db","test_s
+uite_db2"]
+
+
+//
+//
+//
+$

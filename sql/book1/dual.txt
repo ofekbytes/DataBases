@@ -1,0 +1,73 @@
+[DUAL]
+
+The DUAL is special one row, one column table present by default in all Oracle databases.
+The owner of DUAL is SYS (SYS owns the data dictionary, therefore DUAL is part of the data dictionary).
+but DUAL can be accessed by every user.
+The table has a single VARCHAR2(1) column called DUMMY that has a value of 'X'.
+MySQL allows DUAL to be specified as a table in queries that do not need data from any tables.
+In SQL Server DUAL table does not exist, but you could create one.
+The DUAL table was created by Charles Weiss of Oracle corporation to provide a table for joining in internal views.
+
+mysql> SELECT NOW() FROM DUAL;
++---------------------+
+| NOW()               |
++---------------------+
+| 2017-09-10 11:24:28 |
++---------------------+
+
+
+mysql> SELECT CURRENT_TIME() FROM DUAL;
++----------------+
+| CURRENT_TIME() |
++----------------+
+| 11:24:46       |
++----------------+
+
+
+SELECT SYSDATE() FROM DUAL;
++---------------------+
+| SYSDATE()           |
++---------------------+
+| 2017-09-10 11:25:43 |
++---------------------+
+
+
+mysql> SELECT CURRENT_TIMESTAMP() FROM DUAL;
++---------------------+
+| CURRENT_TIMESTAMP() |
++---------------------+
+| 2017-09-10 11:26:34 |
++---------------------+
+
+
+mysql> SELECT LOCALTIME() FROM DUAL;
++---------------------+
+| LOCALTIME()         |
++---------------------+
+| 2017-09-10 11:27:01 |
++---------------------+
+
+
+mysql> SELECT LOCALTIMESTAMP() FROM DUAL;
++---------------------+
+| LOCALTIMESTAMP()    |
++---------------------+
+| 2017-09-10 11:28:40 |
++---------------------+
+
+
+mysql> SELECT UTC_TIME FROM DUAL;
++----------+
+| UTC_TIME |
++----------+
+| 08:30:34 |
++----------+
+
+
+mysql> SELECT UTC_TIMESTAMP FROM DUAL;
++---------------------+
+| UTC_TIMESTAMP       |
++---------------------+
+| 2017-09-10 08:31:08 |
++---------------------+
+1 row in set (0.00 sec)

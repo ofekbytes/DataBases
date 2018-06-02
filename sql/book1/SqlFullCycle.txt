@@ -1,0 +1,119 @@
+
+-------------------------------------------
+create DataBase / Schema
+-------------------------------------------
+CREATE SCHEMA `yaron` ;
+
+
+-------------------------------------------
+create a table 'yaron' with field/column
+-------------------------------------------
+CREATE TABLE `yaron`.`PhoneList` (
+`index` INT NOT NULL COMMENT 'index - primary key (pk)',
+`FirstName` VARCHAR(45) NULL COMMENT 'FirstName',
+`LastName` VARCHAR(45) NULL COMMENT 'LastName',
+`TelephoneNumber` VARCHAR(45) NULL COMMENT 'TelephoneNumber',
+PRIMARY KEY (`index`));
+-------------------------------------------
+
+
+-------------------------------------------
+insert 1 field/column
+-------------------------------------------
+INSERT INTO `yaron`.`PhoneList` (`index`, `FirstName`, `LastName`, `TelephoneNumber`)
+VALUES ('1', 'yaron', 'kessler', '0584-123-123');
+
+
+-------------------------------------------
+update 1 field/column
+-------------------------------------------
+UPDATE `yaron`.`PhoneList`
+SET `FirstName`='jron'
+WHERE `index`='1';
+-------------------------------------------
+
+
+-------------------------------------------
+update 1 field/column
+-------------------------------------------
+UPDATE `yaron`.`PhoneList`
+SET `FirstName`='yaron'
+WHERE `FirstName`='jron';
+-------------------------------------------
+
+
+-------------------------------------------
+update 1 field/column
+-------------------------------------------
+UPDATE yaron.PhoneList p
+SET p.TelephoneNumber = '0584-123-123'
+WHERE p.FirstName = 'jron';
+-------------------------------------------
+Query OK, 1 row affected (0.22 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+-------------------------------------------
+output
+-------------------------------------------
+SELECT *
+FROM yaron.PhoneList;
+
++-------+-----------+----------+-----------------+
+| index | FirstName | LastName | TelephoneNumber |
++-------+-----------+----------+-----------------+
+|     1 | jron      | kessler  | 0584-123-123    |
++-------+-----------+----------+-----------------+
+1 row in set (0.00 sec)
+
+
+-------------------------------------------
+update 1 field/column
+-------------------------------------------
+UPDATE yaron.PhoneList p
+SET p.TelephoneNumber = '0584-321-123'
+,p.FirstName = 'yaron'
+WHERE p.FirstName = 'jron';
+-------------------------------------------
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+-------------------------------------------
+output
+-------------------------------------------
+SELECT * FROM yaron.PhoneList;
+
++-------+-----------+----------+-----------------+
+| index | FirstName | LastName | TelephoneNumber |
++-------+-----------+----------+-----------------+
+|     1 | yaron     | kessler  | 0584-321-123    |
++-------+-----------+----------+-----------------+
+1 row in set (0.00 sec)
+
+
+INSERT INTO `yaron`.`PhoneList` (`index`, `FirstName`, `LastName`, `TelephoneNumber`)
+VALUES ('2', 'eli', 'lee', '0584-333-222');
+
+
+-------------------------------------------
+insert 1 field/column
+-------------------------------------------
+INSERT INTO `yaron`.`PhoneList` (`index`, `FirstName`, `LastName`, `TelephoneNumber`)
+VALUES ('1', 'yaron', 'kessler', '0584-123-123');
+
+-------------------------------------------
+output
+-------------------------------------------
+SELECT * FROM yaron.PhoneList;
+
++-------+-----------+----------+-----------------+
+| index | FirstName | LastName | TelephoneNumber |
++-------+-----------+----------+-----------------+
+|     1 | yaron     | kessler  | 0584-321-123    |
+|     2 | eli       | lee      | 0584-333-222    |
++-------+-----------+----------+-----------------+
+2 rows in set (0.00 sec)
+
+//todo//
+// delete row
+//delete Table
+//delete DataBase;

@@ -1,0 +1,2524 @@
+
+
+[[[SELECT]]]
+
+
+01. DB intro
+02. SELECT - pulling data from DB
+03. Submit calculation on data
+04. Display Information From Number Of Tables ("JOIN")
+05. Group Function ("group by", "HAVING")
+06. subqueries
+07. Making changes on data
+
+
+.
+.
+01. DB intro
+.
+.
+- SQL
+.
+-- DataBase - read, write, update, add, cancel.
+
+-- ANSI define SQL standard work with table DB.
+
+-- DB can work in iteractive mode -or- inside host language (Embeded Sql).
+
+-!- table must be optimal (no double data),
+    we can connect throug the two -or- more tables
+
+    name  department_number    department_number  salary
+    ----  -----------------    -----------------  ------
+                 50                   50
+
+-!- Rules that we apply on every table.
+
+  pk - primary key.
+       (index/first-number), cannot be a value of "NULL"
+
+  nn - Not Null.
+
+  uk - unique.
+
+  ck - check (add a value)
+
+  fk - foreign key.
+
+.
+- SQL Type.
+.
+
+-- two/2 type of sql:
+--- ANSI
+--- NOT-ANSI.
+
+-- DML (Data Manipulation Language)
+--- INSERT/UPDATE/DELETE
+
+-- DDL (Data Definition Language)
+--- CREATE/ALTER/DROP
+
+-- DCL (Data Control Language)
+--- GRANT/REVOKE
+
+-- command to deal with Transaction.
+--- COMMIT/ROLLBACK
+
+.
+.
+02. SELECT - pulling data from DB
+.
+.
+//--------------------
+// SELECT      column information  // define and select col/expression/const
+// FROM        table name          // from a table/s
+// WHERE       condition           // condition
+// GROUP BY    column list         // grouping
+// HAVING      condition           // define logical group
+// ORDER BY    column list ;       // order of the column list.
+//--------------------
+
+
+
+//--------------------
+// SELECT * | [col,col,..]
+// FROM table_name;
+//--------------------
+
+
+// "*" --> all col/s.
+
+
+SELECT *
+FROM Employees ;
+
+
+SELECT FirstName
+FROM Employees ;
+
+
+SELECT LastName , FirstName
+FROM Employees ;
+
+
+SELECT *
+FROM Products ;
+
+
+SELECT CategoryID
+FROM Products ;
+
+
+
+\\-----------------------
+\\ "distinct"
+\\ display only non-duplicate record.
+\\-----------------------
+
+
+-----------------------
+SELECT DISTINCT {* | [COL, COL,..,]}
+FROM table_name ;
+-----------------------
+
+
+SELECT distinct CategoryID
+FROM Products ;
+
+
+SELECT UnitPrice, distinct CategoryID
+FROM Products ;
+
+
+SELECT distinct lastName , FirstName
+FROM employees ;
+
+
+
+\\-----------------------
+\\ "WHERE"
+\\ Condition pulling will set the data pulled
+\\-----------------------
+
+
+-----------------------
+SELECT {* | [COL, COL,..,] }
+FROM table_name
+WHERE condition ;
+-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID = 3 ;
+
+
+SELECT *
+FROM Employees
+WHERE FirstName = 'nancy' ;
+
+
+
+\\-----------------------
+\\ "date"
+\\ date format: YYYY-MM-DD
+\\-----------------------
+
+
+-----------------------
+SELECT {* | [COL, COL,..,] }
+FROM table_name
+WHERE condition = 'YYYY-MM-DD';
+-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE BirthDate = '1948-12-08' ;
+
+
+
+\\-----------------------
+\\ Operators to compare a condition/s
+\\ "="
+\\ "!=", "<>", "^="
+\\ ">"
+\\ ">="
+\\ "<"
+\\ "<="
+\\-----------------------
+
+
+\\-----------------------\\
+\\ 'string compare'
+\\
+\\ compare string with Case-Sensitive
+\\-----------------------\\
+
+
+\\-----------------------
+\\ "="
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID = 3 ;
+
+
+SELECT *
+FROM Employees
+WHERE FirstName = 'nancy' ;
+
+
+SELECT *
+FROM Employees
+WHERE FirstName = 'nancy levi' ;
+
+
+\\
+\\ YYYY-MM-DD
+\\
+
+
+SELECT *
+FROM Employees
+WHERE BirthDate = '1948-12-08' ;
+
+
+\\-----------------------
+\\ ">"
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID > 2 ;
+
+
+\\-----------------------
+\\ ">="
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID >= 2 ;
+
+
+SELECT *
+FROM Employees
+WHERE FirstName >= 'Paz' ;
+
+
+\\-----------------------
+\\ "<"
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID < 3 ;
+
+
+\\-----------------------
+\\ "<="
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID <= 3 ;
+
+
+\\-----------------------
+\\ "<>"
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID <> 3 ;
+
+
+SELECT *
+FROM Employees
+WHERE FirstName <> 'nancy' ;
+
+
+SELECT *
+FROM Employees
+WHERE BirthDate <> '1948-12-08' ;
+
+
+\\-----------------------
+\\ BETWEEN...AND...
+\\ NOT BETWEEN...AND...
+\\ IN (record list/s)
+\\ NOT IN (record list/s)
+\\ LIKE String pattern
+\\ IS NULL
+\\ IS NOT NULL
+\\ AND
+\\ OR
+\\ ORDER BY
+\\-----------------------
+
+
+\\-----------------------
+\\ wildcard
+\\ "%" - comapre to 0 -or- more string
+\\ "_" - compare to one/1 char/note
+\\-----------------------
+
+
+\\-----------------------
+\\ BETWEEN...AND...
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID
+BETWEEN 3 AND 6 ;
+
+
+\\-----------------------
+\\ NOT BETWEEN...AND...
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID
+NOT BETWEEN 3 AND 6 ;
+
+
+\\-----------------------
+\\ IN (record list/s)
+\\-----------------------
+
+
+SELECT *
+FROM Personal_ID
+WHERE FirstName
+IN ('item_1', 'item_2') ;
+
+
+SELECT *
+FROM personal
+WHERE first_name
+IN ('maor')
+
+
+SELECT *
+FROM personal
+WHERE first_name
+IN ('maor', 'nir')
+
+
+\\-----------------------
+\\ NOT IN (record list/s)
+\\-----------------------
+
+
+SELECT *
+FROM Personal_ID
+WHERE FirstName
+NOT IN ('item_1', 'item_2') ;
+
+
+SELECT *
+FROM personal
+WHERE first_name
+NOT IN ('maor')
+
+
+SELECT *
+FROM personal
+WHERE first_name
+NOT IN ('maor', 'nir')
+
+
+\\-----------------------
+\\ LIKE String pattern
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE LastName
+LIKE 'f%' ;
+
+
+SELECT *
+FROM Employees
+WHERE LastName
+LIKE '%r' ;
+
+
+SELECT *
+FROM Employees
+WHERE LastName
+LIKE '%e%' ;
+
+
+SELECT *
+FROM Employees
+WHERE LastName
+LIKE '%k%' ;
+
+
+SELECT *
+FROM Employees
+WHERE LastName
+LIKE '%_k%' ;
+
+
+\\-----------------------
+\\ NOT LIKE String pattern
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE LastName
+NOT LIKE '%_k%' ;
+
+\\-----------------------
+\\ IS NULL
+\\-----------------------
+
+
+SELECT *
+FROM Personal_ID
+WHERE City
+IS NULL ;
+
+
+\\-----------------------
+\\ IS NOT NULL
+\\-----------------------
+
+
+SELECT *
+FROM Personal_ID
+WHERE City
+IS NOT NULL ;
+
+
+\\-----------------------
+\\ SELECT *
+\\ FROM table_name
+\\ WHERE condition {AND | OR} condition;
+\\-----------------------
+
+
+\\-----------------------
+\\ AND
+\\-----------------------
+
+
+SELECT *
+FROM Personal_ID
+WHERE FirstName='eli'
+AND LastName='cohen' ;
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 6
+AND FirstName LIKE 'j%' ;
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 6
+AND EmployeeID = 8 ;
+
+
+\\-----------------------
+\\ OR
+\\-----------------------
+
+
+SELECT *
+FROM Personal_ID
+WHERE FirstName='eli'
+OR LastName='cohen' ;
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 6
+OR EmployeeID = 8 ;
+
+
+\\-----------------------
+\\ Default Priority Level
+\\-----------------------
+
++-----------+----------------------------------------+
+| Priority  | Operator                               |
+| level     |                                        |
++-----------+----------------------------------------+
+| 1         | All compare operators                  |
+|           | BETWEEN, IS NULL, LIKE, IN,            |
+|           | >= , =<, < , > , <> , =)               |
++-----------+----------------------------------------+
+| 2         | NOT                                    |
++-----------+----------------------------------------+
+| 3         | AND                                    |
++-----------+----------------------------------------+
+| 4         | OR                                     |
++-----------+----------------------------------------+
+
+
+SELECT *
+FROM Personal_ID
+WHERE FirstName='yaron'
+AND LastName='kessler'
+OR Notes='tkjgg' ;
+
+
+SELECT *
+FROM Personal_ID
+WHERE FirstName='yaron'
+AND (LastName='kessler' OR Notes='tkjgg') ;
+
+
+\\-----------------------
+\\ ORDER BY
+\\-----------------------
+
+
+\\-----------------------
+\\ SELECT    {*|column_name, [,column_name...]}
+\\ FROM      table_name
+\\ WHERE     condition
+\\ ORDER BY  column_name [ASC | DESC]
+\\           [,column_name [ASC | DESC]..] ;
+\\-----------------------
+
+
+\\-----------------------
+\\ ASC  - Ascending Order \96 [A..Z] (default order)
+\\ DESC - Descending Order \96 [Z..A]
+\\-----------------------
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 8
+ORDER BY FirstName ;
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 8
+ORDER BY FirstName DESC ;
+
+
+SELECT TitleOfCourtesy , LastName
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 8
+ORDER BY TitleOfCourtesy ,  LastName DESC ;
+
+
+SELECT TOP 3 *
+FROM Products
+ORDER BY UnitPrice DESC ;
+
+
+SELECT TOP 3 *
+FROM Products
+ORDER BY UnitPrice ASC ;
+
+
+SELECT firstName , LENGTH(firstName) AS 'nam leng'
+FROM Employees
+ORDER BY 'nam leng' ;
+
+.
+.
+03. Submit calculation on data
+.
+.
+
+- number operators
+  " + "
+  " - "
+  " * "
+  " / "
+
+-!- We can use number operators in anywhere on the \93SELECT\94 command,
+    except the \93FROM\94 part.
+
+
+SELECT LastName, Address, PhoneNumber, PhoneNumber * 12
+FROM Personal_ID
+WHERE City='holon' ;
+
+
+-- Display LastName, salary, year salary (salary * 12 month) of every SalesMan.
+
+SELECT lastname, salary, salary * 12
+FROM employees
+WHERE title='Sales Representative' ;
+
+
+-- Display lastname, salary, commission_percent for a mont for every SalesMan.
+
+SELECT lastname, salary, commission_pcl, salary * commission_pcl/100 COMMISSION
+FROM employees
+WHERE title='Sales Representative' ;
+
+
+- priority rules
+-- "*", "/", "+", "-"
+-- operator with the same priority are calculated from left-to-right
+-- use "(", ")", to force priority rules.
+
+
+SELECT lastname,salary,
+       12*salary + 200 "Annual Salary"
+FROM   employees
+WHERE  dept_ID=43 ;
+
+
+SELECT lastname,salary,
+       12 * (salary + 200) "Annual Salary"
+FROM   employees
+WHERE  dept_ID=43 ;
+
+
+
+- TOP -> (TOP N)
+
+
+SELECT TOP N * | column
+FROM employee
+
+
+SELECT TOP 3 *
+FROM Products
+ORDER BY UnitPrice DESC ;
+
+
+
+- number function
+
+
+-- ROUND(Column \ expression, n)
+
+   n=0 (No number after/right to the decimal number (.XX))
+   ROUND (45.923,0)->46
+
+   n<0 (round the number left to the decimal number (XX.))
+   ROUND (45.923,-1)->50
+
+   n>0 (round the number right to the decimal number (.XX))
+   ROUND (45.923,2)->45.92
+
+
+-- TRUNC (column \ expression, n)
+
+   n=0 (Cut all the number after/right to the decimal number)
+   TRUNC (45.923,0)-->45
+   n<0 (Cut the number after/right to the decimal number)
+   TRUNC (45.923,-1)-->40
+   n>0 (Cut the number before/left to the decimal number)
+   TRUNC (45.923,2)-->45.92
+
+
+-!- ROUND and TRUNC are equal if "n=0".
+
+
+-- MOD (m,n)
+
+   1500 % 200 = 100
+
+   MOD(1500,200)->100
+
+
+SELECT   last_name, salary, salary/22 "Daily Salary",
+         ROUND(salary/22,0) "Rounded Daily Salary"
+FROM employees
+WHERE dept_id=20 ;
+
+
+SELECT ID, Name, priceA, priceB,
+       priceB/2  "Price  2 / 2",
+       ROUND(priceA/3,0) "Price A + ROUND"
+FROM pc
+where priceA>10 ;
+
+
+SELECT Name, priceA, priceB, priceA+priceB "priceA + priceB",
+             ROUND(priceA/3,0) "PriceA"
+FROM pc
+WHERE priceA < 12 ;
+
+
+SELECT name, basic_price,
+       trunc(basic_price*0.75,0) "child price"
+FROM activities ;
+
+
+SELECT ID, Name, priceA, priceB,
+       TRUNC(priceA*2,0) "priceA * 2"
+FROM pc ;
+
+
+
+SELECT lastname, start_date, SYSDATE,
+       SYSDATE-start_date "TOTAL DAYS",
+       TRUNC((SYSDATE-start_date)/7,0) weeks,
+       ROUND(mod(SYSDATE-start_date),7),0) days
+FROM   employees
+WHERE  start_date>'01-jan-1992'
+
+
+SELECT Name, priceA, priceB, priceA/2 "priceA/2",
+             MOD(priceA,2) "priceA%2"
+FROM pc
+
+
+
+- "||" operator
+
+-- Add row and string to one column.
+
+-- Creating a column that calculate a string
+
+-- we can set constant with (').
+
+
+SELECT first_name ||' '|| last_name "employees"
+FROM employees
+WHERE dept_id = 42;
+
+
+SELECT first_name ||' '|| last_name || ',' || title "vice presidents"
+FROM employees
+WHERE dept_id = 42;
+
+
+
+- String fuction:
+
+-- lower-case
+   lower (column \ expression)
+   lower ("Neture Way") --> "neture way"
+
+-- upper-case
+   upper (column \ expression)
+   upper ("Neture Way") --> "NETURE WAY"
+
+-- Initcap
+   Initcap (column \ expression)
+   Initcap ("NETURE WAY") --> "Neture Way"
+
+-- substr
+   -!- if "n" not exit then till then end of the row/line.
+   substr (column \ expression, m [,n])
+   substr ("NETURE WAY",8,3) --> "Way"
+
+-- length
+   length (column \ expression)
+   length ("NETURE WAY",) --> "Way"
+
+
+   SELECT firstName , LEN(firstName) AS 'nam leng'
+   FROM Employees
+   ORDER BY 'nam leng' ;
+
+
+SELECT first_name, last_name, start_date,
+             lower(last_name)  " lowercase"
+FROM employees ;
+
+SELECT first_name, last_name, start_date,
+             upper(last_name)  " upperrcase"
+FROM employees ;
+
+
+SELECT UPPER(last_name), LOWER(first_name), INITCAP(title)
+FROM employees
+WHERE title like 'VP%';
+
+
+SELECT Upper(FirstName), LOWER(LastName), INITCAP(City),
+FROM Personal_ID ;
+
+
+SELECT first_name, last_name
+FROM employees
+WHERE last_name='PAZ' ;
+
+
+SELECT first_name, last_name
+FROM employees
+WHERE UPPER(last_name)='PAZ' ;
+
+
+SELECT name, LENGTH(name), short_desc
+FROM activities
+WHERE SUBSTR(short_desc,1,5)='Horse' ;
+
+
+SELECT UPPER(FirstName), LOWER(LastName), SUBSTR(EmailAddress,8,3)
+FROM Personal_ID ;
+
+
+SELECT UPPER(FirstName), LOWER(LastName), SUBSTR(EmailAddress,8,3), LENGTH(FirstName)
+FROM Personal_ID ;
+
+
+
+- NULL:
+
+-- NULL \96 the value \93null\94 is given when the value is unknow
+   -or- haven't been set.
+
+-- Null is not a zero/0 -or- Space/\94 \93.
+
+-- Null will get Null value.
+
+
+SELECT last_name, salary, commission_pct,
+       salary * commission_pct/100 commission
+FROM employees
+WHERE salary >= 1500 ;
+
+
+
+- NVL:
+
+-- Convert NULL value to real one.
+
+-- We can use \93NVL\94 to convert: date, character, number.
+
+\\-----------------------
+\\ NVL (expr1, expr2)
+\\
+\\ "expr1" is the original value, that can have \93NULL\94.
+\\
+\\ \93expr2\94 is the value that will be return, if the original value was \93NULL\94
+\\
+\\ -!- we must have the same type between the two/2 expression
+\\-----------------------
+
+
+SELECT last_name, salary, NVL(Commission_pct,0),
+       salary * NVL(commission_pcl,0)/100 commission
+FROM employees
+WHERE salary >= 1500 ;
+
+
+\\ -note: ( NULL --> "0")
+
+SELECT FirstName, LastName, PhoneNumber, NVL(City,0)
+FROM Personal_ID ;
+
+
+- Date/s action
+
+-- we can do calculation with math.
+
+Date + number_of_days = date
+date \96 number_of_days = date
+date \96 date = number/s_of_day/s_between_dates
+
+
+SELECT last_name, (SYSDATE-start_date)/7 weeks
+FROM employees
+WHERE dept_id=43;
+
+.
+.
+04. Display Information From Number Of Tables ("JOIN")
+.
+.
+
+- \93Join\94 allow us to Display data from several table.
+
+- \93outer join\94 allow us to Display data from several table that
+  doesn't have anything in comment
+
+- "self join\94 - execute.
+
+- "join"
+-- \93join\94 is being used for receiving data from a number/s of data/s.
+-- record from one table are joined  to another table record
+   (foreign key, primary key)
+
+-- \93join\94 has two/2 type
+--- equal
+--- non-equal
+
+-- \93join\94 other type
+--- outer join
+--- self join
+
+-- example:
+   common field are [Table_1(Dept_ID)] -and- [Table_2(ID)]
+
+Table_1
+ID  LastName  FirstName  Dept_ID
+1   tal       Dude       20
+...
+...
+
+
+Table_2
+ID  Name   Reson_ID
+10  sales  1
+...
+...
+
+.
+.
+- join
+
+\\-----------------------
+\\ SELECT table.column, table.column...
+\\ FROM table1, table2
+\\ WHERE table1.column = table2.column ;
+\\-----------------------
+
+
+SELECT  Personal_ID.FirstName, employees.first_name
+FROM Personal_ID, employees
+WHERE Personal_ID.FirstName = employees.first_name ;
+
+
+SELECT employees.last_name, employees.dept_id, depratments.name
+FROM employees, departments
+WHERE employees_id = departments.id ;
+
+
+SELECT  Personal_ID.FirstName, Personal_ID.LastName, employees.first_name,
+        employees.last_name
+FROM Personal_ID, employees
+WHERE Personal_ID.FirstName = employees.first_name ;
+
+
+SELECT departments.id  "Departments ID",
+       regions.id "regions id",
+       regions.name "regions name",
+FROM departments, regions
+WHERE departments.id = regions.id ;
+
+
+SELECT  Personal_ID.FirstName "Personal_ID.FirstName",
+              Personal_ID.LastName "Personal_ID.LastName",
+              employees.first_name "employees.first_name",
+              employees.last_name "employees.last_name"
+FROM Personal_ID, employees
+WHERE Personal_ID.FirstName = employees.first_name
+
+
+SELECT employees.last_name, employees.first_name,
+       employees.dept_id,
+       departments.name
+FROM employees,departments
+WHERE employees.dept_id = departments.id
+AND employees.last_name = 'Tal' ;
+
+
+SELECT  Personal_ID.FirstName,   Personal_ID.LastName,
+              employees.first_name,  employees.last_name
+FROM Personal_ID, employees
+WHERE Personal_ID.FirstName = employees.first_name
+AND  Personal_ID.FirstName = 'yaron' ;
+
+
+SELET customers.name, employees.id,
+      employees.last_name
+FROM customers, employees
+WHERE customers.sales_rep_id = employees.id
+AND customers.discount_pct = 15 ;
+
+.
+.
+// "alias" - Select with an alias.
+
+SELECT c.name       "Customer Name",
+       c.region_id  "Region ID".
+       r.name       "Region Name"
+FROM customers c, regions r
+WHERE c.region_id = r.id ;
+
+
+SELECT  e.first_name, e.last_name,
+        p.FirstName, p.LastName
+FROM employees e, Personal_ID p
+WHERE e.first_name = p.FirstName ;
+
+.
+.
+// non - equal joins
+// used when table1.col <> table2.col
+
+SELECT e.last_name, e.title, e.salary, s.grade
+FROM employees e, salgrades s
+WHERE e.salary BETWEEN s.lowal AND s.highsal ;
+
+
+.
+.
+// outer join
+// used for non equal tables records.
+// The sign is "+\94, and located in the "WHERE" near the wanted table.
+// -!- the sign \93+\94 can be located only once.
+
+SELECT table.column, table.column
+FROM table1, table2
+WHERE table1.column(+)=table2.column ;
+
+
+SELECT table.column, table.column
+FROM table1, table2
+WHERE table1.column=table2.column(+) ;
+
+
+SELECT e.last_name "Sales rep", e.id "sales rep id"
+       c.name "Customer"
+FROM   employees e, customers c
+WHERE e.id(+)=c.sales_rep_id
+ORDER BY e.last_name ;
+
+
+SELECT worker.last_name "worker name"
+       manager.last_name "manager"
+FROM employees worker, employees manager
+WHERE worker.manager_id = manager.id ;
+
+
+SELECT emp.first_name "empoyees",
+       per.FirstName "personal_id"
+FROM employees emp, Personal_ID per
+WHERE emp.first_name = per.FirstName ;
+
+
+.
+.
+05. Group Function ("group by", "HAVING")
+.
+.
+- using "group by" in \93select\94 command, to displaying a "statistic" information
+  about group/s of record/s.
+- using \93HAVING\94 in \93select\94 command, to "include" -or-
+  "dismiss" a group of record/s
+.
+.
+- "group" function.
+
+-- The SUMARY value of \93n\94, (ignores \93null\94 value)
+   SUM (DISTINCT | ALL | n)
+
+-- The AVERAGE value of \93n\94, (ignores \93null\94 value)
+   AVG (DISTINCT | ALL | n)
+
+-- The MAXIMUM value of \93n\94
+   MAX (DISTINCT | ALL | expr)
+
+-- The MINIMUM value of \93n\94
+   MIN (DISTINCT | ALL | expr)
+
+-- The Number of line that \93expr\94 is not \93NULL\94.
+  COUNT (DISTINCT | ALL | expr |*)
+  *
+  expr
+
+
+-!- Notes:
+    "n" - number value.
+    "expr" - number/string/date value.
+    "DISTINCT\94 - function that erase double/same value/data in the list.
+    "ALL\94 -  (by default) make the function consider all the values.
+
+
+-- MAX, MIN, AVG, SUM, COUNT
+
+SELECT MAX(salary), MIN(salary),
+       AVG(salary), SUM(salary)
+FROM   employees ;
+
+
+-- MIN
+
+SELECT MIN(name) "First In List"
+FROM customers ;
+
+
+SELECT MIN (first_name)  "first name in list"
+FROM employees ;
+
+
+SELECT MIN (start_date) "MIN Date"
+FROM employees ;
+
+
+SELECT MIN(priceA) "MIN PRICE A"
+FROM pc ;
+
+
+SELECT MIN(UnitPrice)
+FROM Products ;
+
+
+-- MAX
+
+SELECT MAX(total) "Largest Order"
+FROM orders ;
+
+
+SELECT MAX (first_name)  "last name in list"
+FROM employees ;
+
+
+SELECT MAX (priceA) "MAX PriceA"
+FROM pc ;
+
+
+SELECT MAX(start_date) "Max date"
+FROM employees ;
+
+
+SELECT MAX(UnitPrice)
+FROM Products ;
+
+
+-- AVG
+
+SELECT AVG(a.basic_price) "Avarage Price"
+FROM items i, activities a
+WHERE i.activity_id=a.id
+AND i.ord_id=100 ;
+
+
+SELECT AVG(priceA) "Average PriceA"
+FROM pc
+
+
+SELECT AVG(p.priceA) "AVG PriceA",
+             AVG(p.priceB) "PriceB"
+FROM pc p, employees e
+WHERE p.Name = e.first_name ;
+
+
+SELECT AVG(UnitPrice)
+FROM Products ;
+
+
+-- SUM
+
+SELECT SUM(TOTAL) "Total Orders"
+FROM orders ;
+
+
+SELECT SUM(priceA) "SUM / TOTAL priceA"
+FROM pc;
+
+
+SELECT SUM(UnitPrice)
+FROM Products ;
+
+
+SELECT SUM(priceA) "SUM priceA"
+FROM pc ;
+
+
+-- COUNT(*)
+
+SELECT COUNT(*) "Clerks"
+FROM employees
+WHERE title='clerk' ;
+
+
+SELECT COUNT (*) "PriceA"
+FROM pc
+WHERE priceA >=11 ;
+
+
+-- COUNT(expr)
+
+SELECT COUNT(UnitPrice)
+FROM Products ;
+
+
+SELECT COUNT( distinct UnitPrice)
+FROM Products ;
+
+
+SELECT COUNT(commission_pct) "Employees with commission"
+FROM employees
+
+
+SELECT COUNT (priceA) "Cout for PriceA"
+FROM pc ;
+
+
+.
+.
+- GROUP BY
+
+
+//
+//
+//  SELECT column, group_function
+//  FROM table
+//  WHERE [condition]
+//  GROUP BY group_by_expression
+//  ORDER BY column
+//
+//
+
+-- "group_by_expression" -->
+   a list of column that there value is the base to the base,
+   every record in the column that/s equals,
+   will be in the same group.
+
+-- with the use of \93GROUP BY\94, we can divide a table to a smaller/s group/s
+   -and- to give information that summer/s every group like that.
+
+-- we can write inside the \93SELECT\94 just the column that inside the
+   \93group_by_expression\94 -and- function group/s
+
+--  record result will be ordered in Asc(default),
+    and by a column order inside the \93GROUP BY\94,
+    and that the can change there order using the \93ORDER BY\94
+
+-- output will be one record for each group
+
+
+SELECT id, last_name, dept_id
+FROM employees
+WHERE dept_id=42;
+
+
+SELECT Name, priceA, priceB, priceC
+FROM pc
+WHERE priceA >= 40 ;
+
+
+SELECT dept_id, count(*) "Number of Employees"
+FROM employees
+WHERE dept_id = 42;
+GROUP BY dept_id ;
+
+
+SELECT priceA, count(*)  "PriceA - equal price Number"
+FROM pc
+WHERE priceA >= 0
+GROUP BY priceA ;
+
+
+SELECT discount_pct, count(*) "CUstomers #"
+FROM customers
+GROUP BY discount_pc ;
+
+
+SELECT City, count (*) "People - Linving in The City"
+FROM  Personal_ID
+WHERE City
+IS NOT NULL
+GROUP BY City;
+
+
+SELECT title, SUM(salary) PAYROLL
+FROM employees
+GROUP BY title
+ORDER BY SUM(salary);
+
+
+SELECT Name, SUM (priceA) "Price/s"
+FROM  pc
+GROUP BY Name
+ORDER BY SUM(priceA) ;
+
+
+SELECT CategoryID , AVG(UnitPrice)
+FROM Products
+GROUP BY CategoryID;
+
+
+SELECT Name, AVG (priceA) "Price/s"
+FROM  pc
+GROUP BY Name ;
+
+
+SELECT  AVG(UnitPrice)
+FROM Products
+GROUP BY CategoryID;
+
+
+SELECT  AVG (priceA) "Price/s"
+FROM  pc
+GROUP BY Name
+ORDER BY Name ASC ;
+
+
+SELECT  Name, AVG (priceA) "Price/s"
+FROM  pc
+GROUP BY Name
+ORDER BY Name ASC ;
+
+
+SELECT dept_id, title, COUNT(*)
+FROM employees
+GROUP BY dept_id, title;
+
+
+SELECT   Name, priceA, COUNT(*)
+FROM  pc
+GROUP BY Name, priceA ;
+
+
+SELECT title, dept_id, COUNT(*)
+FROM employees
+GROUP BY title, dept_id ;
+
+
+SELECT   FirstName, LastName, COUNT(*) "TOTAL_COUNT"
+FROM  Personal_ID
+GROUP BY  FirstName, LastName ;
+
+
+.
+.
+-- Illegal use of GROUP BY  group function
+
+
+---NOT WORKING---
+// SELECT dept_id, AVG(salary)
+// FROM employees
+// WHERE AVG(salary) > 2000
+// GROUP BY dept_id;
+
+
+// WHERE AVG(salary) > 2000
+// *
+// ERROR at line 3
+// ORA-00934: group function is not allowed here
+
+
+---FIXED------
+SELECT dept_id, AVG(salary)
+FROM employees
+GROUP BY dept_id
+HAVING AVG(salary) > 2000 ;
+
+.
+.
+- HAVING
+.
+.
+//
+//SELECT columm, group_function
+//FROM table
+//[WHERE condition]
+//[GROUP BY group_by_expression]
+//[HAVING group_condition]
+//[ORDER BY columm]
+//
+
+
+SELECT dept_id, AVG(salary)
+FROM employees
+GROUP BY dept_id
+HAVING AVG(salary) > 2000 ;
+
+
+SELECT dept_id, COUNT(*) employees
+FROM employees
+GROUP BY dept_id
+HAVING count(*)>2;
+
+
+SELECT priceA, COUNT(*) "TOTAL"
+FROM pc
+GROUP BY priceA
+Having count(*) >= 1 ;
+
+
+SELECT e.dept_id, d.name, SUM(e.salary) PAYROLL
+FROM employees e, departments d
+WHERE e.dept_id=d.id
+GROUP BY e.dept_id, d.name
+HAVING SUM(e.salary)>4000 ;
+
+
+SELECT CategoryID , AVG(UnitPrice)
+FROM Products
+GROUP BY CategoryID
+HAVING AVG(UnitPrice) > 30  ;
+.
+.
+06. subqueries
+
+-- writing nested query to present information that not all
+   the condition for it are know.
+-- Using sub query in DML command
+-- sorting information by using sub query
+.
+.
+- sub query is a \93select\94/SQL command mixed with part of the
+  other SQL command.
+//
+//
+// SELECT select_list
+// FROM table
+// WHERE expr operator
+// (SELECT select-list
+//  FROM table);
+//
+//
+
+-!- important notes:
+
+-- operators: \93>\94, \93=\94, \93in\94
+
+-- sub query must behind it.
+   \93( sub query  )\94
+
+.
+-- there is two/2 type of comparison operator
+
+--- single row:
+    "<=", "<", ">=", ">", "<>", "="
+
+--- multiple row:
+    NOT IN, IN
+
+
+-- sub query must be inside the right operator
+   (left_operator = right_operator)
+
+-- sub query cannot contain the \93ORDER BY\94
+
+-- we can use sub query/SQL inside many SQL commands,
+   in different part of the SQL command
+
+
+- example: Display the \93last_name\94 and \93job\94 for every employees in his
+  department that his \93last_name\94 is \93TAL\94
+
+SELECT last_name, title
+FROM employees
+WHERE dept_id =
+      (SELECT dept_id
+       FROM employees
+       WHERE UPPER(lastname)='TAL')
+      )
+
+// output:
+// sub query result: 41
+// main query use this value (41) in here main condition
+// WHERE dept_id=41
+.
+.
+- SINGLE ROW - Sub query:
+
+-- sub query of this type return only one record.
+-- For sub query of this type, we will use the \93single row\94 operators.
+
+-- example: display the Last-Name, Job, and Salary for every employee
+            that makes more than average monthly fee/pay.
+
+   SELECT last_name, title, salary
+   FROM employees
+   WHERE salary >
+         (SELECT AVG(salary)
+          FROM employees);
+
+.
+.
+- error writing sub query
+
+-- if we write a sub query, that have the use of single row operators,
+   and the sub query return a result that it is more then one line,
+   an error message will be accepted.
+
+-- example:
+   display the last_name, job, department_id,
+   of employees that have a last_name of 'PAZ' in a department
+
+
+//   SELECT last_name, title, dept_id
+//   FROM employees
+//   WHERE dept_id =
+//                 (SELECT dept_id
+//                  FROM employees
+//                  WHERE UPPER(last_name)='PAZ');
+//                 );
+//
+//
+// ERROR:
+// ORA-01427: single-row subquery returns more than one row
+//
+-!- ERROR NOTES:
+    we have received an error message, because there is two/2 employees
+    with the name "PAZ", in TWO/2 different departments.
+    FIXING that using the "IN" operators (instead of "=" operator)
+.
+.
+- MULTIPLE ROW - Sub query:
+
+-- sub query of a "multiple row" return more then one record.
+
+-- sub query of a "multiple row" we have to use of multiple row operator.
+
+
+-- example: fixing previous error example
+
+   SELECT last_name, title, dept_id
+   FROM employees
+   WHERE dept_id IN
+                 (SELECT dept_id
+                  FROM employees
+                  WHERE UPPER(last_name)='PAZ');
+                 );
+
+-- Example:
+   display the names of customers, that there salesman is worker number 14
+   -or- a salesman from a department 32.
+
+SELECT name
+FROM customers
+WHERE sales_rep_id IN
+                     (SELECT id
+                      FROM employees
+                      WHERE id=14
+                      OR  dept_id=32
+                     );
+
+
+.
+.
+- Using \93having\94 inside sub query
+
+
+-- example: Display all the department that there Average monthly salary is bigger
+            then the general average salary.
+
+SELECT  dept_id, AVG(salary)
+FROM    employees
+GROUPBY dept_id
+HAVING  AVG(salary) >
+                      (
+                        SELECT AVG(salary)
+                        FROM   employees
+                      );
+
+
+-- #2:
+
+SELECT Name, AVG(priceA)
+FROM pc
+GROUP BY Name
+HAVING AVG(priceA) >
+                     (
+                       SELECT AVG(priceA)
+                       FROM pc
+                     );
+
+
+
+-- Display the job with the lowest average salary
+
+SELECT title, AVG(salary)
+FROM employees
+GROUP BY title
+HAVING AVG(salary) =
+                     (
+                        SELECT MIN(AVG(salary))
+                        FROM employees
+                        GROUP BY title
+                     );
+
+
+#2:
+
+SELECT Name, AVG(priceA)
+FROM pc
+GROUP BY Name
+HAVING AVG(priceA) =
+                     (
+                        SELECT MIN(priceA)
+                        FROM pc
+
+                     );
+
+
+.
+.
+07. Making changes on data
+
+1. adding new record/s to the Data-Base Tables.
+2. Change exist record/s on the Data-Base Tables.
+3. delete Change exist record/s on the Data-Base Tables.
+4. control on the change/s apply
+
+
+-- DML commands (Data Manipulation Language)
+
+command      description
+----------   ------------------------------------------------------
+INSERT       insert a new record to Table
+UPDATE       update an exist record on Table
+DELETE       delete an exist record on Table
+COMMIT       commit/apply all change/s and making them commit
+ROLLBACK     rollback and undo all the change/s that have been made.
+
+
+.
+.
+- INSERT -- insert a new record to Table
+
+//
+// INSERT INTO table [(column [,column...])]
+//   VALUES  (value [,value,...]);
+//
+
+-- table --> table name.
+-- column --> column name that we will insert the value into.
+-- value --> the value entered to the column
+
+
+-!- "INSERT INTO" command insert only one new record to table.
+
+
+.
+.
+-- insert a value/s into all the column in the table -
+    without mention/say the name of the column inside the \93INSERT\94 command.
+
+
+-- example: insert a new department to the department table.
+
+INSERT INTO department
+Values(22,'Administration',2) ;
+
+
+SELECT *
+FROM departments ;
+
+
+
+-- example #2:
+
+INSERT INTO Region
+VALUES (5,'Israel') ;
+
+
+SELECT *
+FROM Region ;
+
+
+-!- new record have been added to the table,
+    the record 'israel' with 2 column value (5,'israel')
+    have been added to the table Region
+
+
+-!- Value/s order must meat/be-equal to the order defined inside table column
+    (column name).
+
+-!- String -or- Dates Value/s must be inside quotas (')
+
+
+
+SELECT *
+FROM pc
+
+
+
+
+-- insert value/s to part/some of the table column,
+   using column name/s inside "INSERT" command
+
+
+-- example: insert a new "customer" into the "customer" table
+            with a value to the fields/columns
+
+   insert a new \93customer\94 (new record) to the \93customer\94 table,
+   with a  value to the fields/column:
+   id, name, phone, sales_rep_id, region_id
+
+
+INSERT INTO customers (id, name, phone, sales_rep_id, region_id)
+VALUES (216, 'clasics', '07-9573495',15,5)
+
+
+-- example: examine the new customer (new reocord)
+
+SELECT *
+FROM customers
+WHERE id=216 ;
+
+
+-- example #2:
+
+INSERT INTO Region (RegionID,RegionDescription)
+VALUES(7,'ghghg') ;
+
+
+SELECT *
+FROM Region
+
+
+SELECT *
+FROM Region
+WHERE RegionID = 7;
+
+
+
+-!- The record must meet/be equal to the column list.
+
+-!- We must set/define a value for all column in the table.
+
+
+
+
+-- insert "NULL" value to column
+
+-- we can insert a "NULL" value to a column
+   that is not define as "NOT NULL" in two/2 ways
+
+1. by writing "NULL" value in the column value list
+
+2. by deleting the column name in the column list
+
+
+
+-- example: insert a new "activie" into the "activities" table.
+
+
+-1-
+INSERT INTO activities (id,name,short_desc,basic_price)
+VALES(40423,'superland',NULL,NULL) ;
+
+
+-2-
+INSERT INTO activities (id,name,basic_price)
+VALES(40424,'superland',50) ;
+
+
+SELECT *
+FROM activities
+WHERE id IN(40423,40424)
+
+
+
+-- example #2:
+
+
+INSERT INTO Region(RegionID,RegionDescription)
+VALUES(9,NULL);
+
+
+SELECT *
+FROM  Region ;
+
+
+
+
+INSERT INTO Region(RegionID)
+VALUES(9);
+
+
+SELECT *
+FROM  Region ;
+
+
+
+
+-- insert a special vales
+
+-- special values:
+
+--- "SYSDATE" --> return current date.
+--- "USER" --> return user name.
+
+-!- name of the function can be different between DataBase/s,
+    but the functionality remain the same.
+
+
+
+-- example: insert a new order record to the order table
+
+INSERT INTO orders(id,customer_id,date_ordered,sales_rep_id)
+Values(113,201,SYSDATE,11);
+
+
+SELECT *
+FROM orders
+WHERE id=113 ;
+
+
+
+-- example: enter a new record/"customer" to the "event_log_table" table
+
+INSERT INTO event_log_table(operation, user_id, operation_date)
+Values(INSERT,USER,SYSDATE);
+
+
+SELECT *
+FROM event_log_table ;
+
+
+
+
+-- copy record/s from another table.
+
+//
+// INSERT INTO table [column(,column)...]
+// Subquery
+//
+
+-- "Subquery" - "SELECT" command that define which record value/s
+   will be insert into the new table.
+
+
+
+-!- it must be order match between the order and column order,
+    between the column in "INSERT" list and column inside the query.
+
+
+-- example: insert to the "history" table a worker/s that
+            started working before the year 1991.
+
+
+INSERT INTO emp_history (id,last_name, first_name, start_date)
+SELECT id,last_name, first_name, start_date
+FROM employees
+WHERE start_date < '01-jan-91' ;
+
+
+-- view the new list (in the new table 'emp_history')
+
+SELECT *
+FROM emp_history ;
+
+
+
+-- example 2:
+
+
+INSERT INTO emp_history (EmployeeID, LastName, FirstName, Title, TitleOfCourtesy,
+                         BirthDate, HireDate)
+SELECT EmployeeID, LastName, FirstName, Title, TitleOfCourtesy, BirthDate, HireDate
+FROM employees
+WHERE HireDate < '01-jan-91' ;
+
+
+-- view the new list (in the new table 'emp_history')
+
+SELECT *
+FROM emp_history ;
+
+
+
+
+-- "UPDATE" command - update data.
+
+//
+// UPDATE table
+// SET column=value[,column=value...]
+// [WHERE condition] ;
+//
+
+-- table --> table name
+
+-- column --> column name that have update-able value
+
+-- value --> new value inside column
+
+-- condition --> the condition that define the record we will update.
+                 We can update one/some/all table
+                 (in term to the defined condition)
+
+
+
+.
+.
+- "UPDATE" command - update 'single' record
+
+
+-- example: move worker number 25 to department 44
+
+
+UPDATE  Employees
+SET     dept_id=44
+WHERE   id=25 ;
+
+
+-- example: move worker number: 22 to department 45,
+            and update salary to 900$
+
+UPDATE  Employees
+SET     dept_id=45, salary=900
+WHERE   id=22 ;
+
+
+-- show the updated worker (worker/s number 25, 22)
+
+SELECT id, last_name, salary, dept_id
+FROM employees
+WHERE id IN(22,25)
+
+
+-- example 2: change worker Address
+
+UPDATE  Employees
+SET     Address='holon, kbg 3'
+WHERE   LastName='King' ;
+
+
+SELECT *
+FROM Employees
+WHERE  LastName='King' ;
+
+
+
+
+-- "UPDATE" command - update number of record/s
+
+-- example: set a new manager (worker number 1) to all worker/s in department 41.
+
+   UPDATE  employees
+   SET     manager_id = 1
+   WHERE   dept_id=41 ;
+
+
+-- example: show all employees in department 41.
+
+   SELECT  id,last_name,dept_id,manager_id
+   FROM    employees
+   WHERE   dept_id = 41 ;
+
+
+-- example: change all RegionID that equal to 9. (RegionID=9)
+
+SELECT *
+FROM Territories ;
+
+
+SELECT TerritoryID, TerritoryDescription,RegionID
+FROM Territories ;
+
+
+INSERT INTO Territories (TerritoryID, TerritoryDescription,RegionID)
+VALUES (98106,'nothing so far',9) ;
+
+
+UPDATE Territories
+SET TerritoryDescription='changed'
+WHERE RegionID=9 ;
+
+
+SELECT TerritoryID, TerritoryDescription,RegionID
+FROM Territories
+WHERE RegionID IN(9) ;
+
+
+
+
+-- "UPDATE" command - update all the record/s in TABLE.
+
+-- doing it by NOT using the WHERE in the command.
+
+-- example: update worker/s salary by adding 10(%) percent to there current salary.
+
+   UPDATE  employees
+   SET     salary = salary * 1.1 ;
+
+
+-- example: display/show worker/s new salary/s
+
+   SELECT id,salary
+   FROM employees ;
+
+
+-- example:
+
+
+SELECT *
+FROM Test ;
+
+
+SELECT date, id, customer_id
+FROM Test ;
+
+
+INSERT INTO Test (date, id, customer_id)
+VALUES ('2.2.2002', 1112,121212123) ;
+
+
+UPDATE Test
+SET customer_id=666456
+
+
+SELECT date, id, customer_id
+FROM Test
+
+
+
+.
+.
+- "DELETE" command - DELETE/ERASE DATA (number of record/s)
+
+\\
+\\ DELETE FROM table
+\\ [WHERE condition] ;
+\\
+
+-- table --> table name (from which we delete/erase record/s)
+
+-- condition --> the condition that define the record we will erase/delete.
+                 Delete a record -or- records -or- all records in the table,
+                 using the term in the condition-term.
+
+
+
+
+-- "DELETE" command - delete/erase a single record.
+
+
+-- example: erase worker number 24.
+
+DELETE FROM employees
+WHERE id=24 ;
+
+
+-- After delete/erasing worker number 24,
+   we will try to get information about him.
+   We will receive this message
+
+   NO ROW SELECTED
+
+
+
+
+-- "DELETE" command - delete/erase number of records.
+
+
+-- example: erase all worker from department number 50.
+
+DELETE FROM employees
+WHERE dept_id = 50 ;
+
+
+
+
+-- "DELETE" command - delete/erase all records from TABLE.
+
+
+-- erase/delete all records from table by not using the WHERE command.
+
+
+-- example: erase all the "event_log_table" from table.
+
+   DELETE FROM event_log_table ;
+
+
+-- view if all record/s have been deleted from table.
+
+SELECT *
+FROM event_log_table ;
+
+
+
+.
+.
+- Transaction control
+
+
+-- Activities collection made inside Data Base,
+   which all execute/end OK -or- not  execute/end at all,
+   there is a logical connection between them (action)
+
+-- example:
+   when we cancel/erase a customer from DB,
+   we will want (also) to cancel his invitation/s
+   (to avoid a situation that invitation/s exist, but the customer isn't
+   (DB Error))
+
+
+
+-- Transaction Start
+
+--- transaction start with the first connection to the DataBase
+    -or- by setting the \93set transaction\94 command.
+--- transaction start when previous transaction end.
+
+
+
+-- Transaction End
+
+--- transaction can End in two/2 ways
+
+---- \93COMMIT\94 -
+     apply all changes made by the user/s, and making them
+     a constant/available inside DataBase.
+
+---- \93ROLLBACK\94 -
+     cancel all changes made by the user/s (by the user)
+
+
+-- data status before the end of the transaction
+--- every change made on the DataBase is temporary
+    until we use the \93COMMIT\94 command
+    and only available to the creating user/s.
+--- other user/s can't view changes.
+--- every change/s can be done/undone,
+    while we haven't use the \93COMMIT\94 command
+--- record/s that been edit/changed by the user/s
+    are been locked (by the user making that change/s)
+    and other user cant edit/change that record/s.
+
+
+-- data status after the \93COMMIT\94 command.
+--- change/s are written to the DataBase.
+--- all the user/s can view the change/s
+--- locked record being released/free,
+    now other user/s can made a change to this record/s.
+
+
+-- data status after \93ROLLBACK\94 command.
+--- Change/s that have been made by the user/s are being Canceled.
+--- user/s that made the change/s -and- then used the \93ROLLBACK\94 command,
+    know will see/view the old data.
+--- locked record (that have been change) getting free/released
+    now other user/s can make change/s to this record/s.
+
+
+-- example:
+
+
+ USER_1                USER_2
++--------------------+--------------------+
+SELECT salary
+FROM employees
+WHERE id = 1 ;
+
+Result = 5000
++--------------------+--------------------+
+                       SELECT salary
+                       FROM employees
+                       WHERE id=1 ;
+
+                       Result = 5000
++--------------------+--------------------+
+UPDATE employees
+SET    salary = 5500
+WHERE id=1 ;
++--------------------+--------------------+
+SELECT salary
+FROM employees
+WHERE id = 1 ;
+
+Result = 5500
++--------------------+--------------------+
+                       SELECT salary
+                       FROM employees
+                       WHERE id=1 ;
+
+                       Result = 5000
++--------------------+--------------------+
+COMMIT ;
++--------------------+--------------------+
+                       SELECT salary
+                       FROM employees
+                       WHERE id = 1 ;
+
+                       Result = 5500
++--------------------+--------------------+
+
+
+-!- if we will use \93ROLLBACK\94 instate of \93COMMIT\94,
+    "USER_1\94 will receive old data (new/changed data will be erase/deleted)
+
+
+ USER_1                USER_2
++--------------------+--------------------+
+ ROLLBACK ;
++--------------------+--------------------+
+SELECT salary          SELECT salary
+FROM employees         FROM employees
+WHERE id = 1 ;         WHERE id = 1 ;
+
+Result = 5000          Result = 5000
++--------------------+--------------------+
+
+
+-- END Transaction without any manged (been plained)
+   (User end transaction without using \93ROLLACK\94 -or- \93COMMIT\94)
+--- there is some case/s that \93ROLLBACK\94 -or- \93COMMIT\94
+    are execute/done  automatically.
+--- DDL command (example: CREATE TABLE)
+    execute/done "COMMIT" automatically.
+--- exit (a normal exit) a DataBase will execute/done "COMMIT" automatically.
+--- exit (a NOT normal exit) a DataBase will execute/done
+    "ROLLBACK" automatically.
+--- DCL command execute/done "COMMIT" automatically.
+
+
+.
+.
+08. Creating Table/s
+
+1. creating table/s that contain Integrity Constrains.
+2. legal definition for table/s name/s.
+3. column type we can define inside a table.
+4. create a table by inserting record/s from other/another table.
+
+
+.
+.
+- Creating Table -  STRUCTURE
+
+CREATE TABLE   table_name
+(column_name   datatype [DEFAULT expr]
+               [column_constraint]
+ ...
+ ...
+[table_constraint] );
+
+
+- "table_name"   \96 the name of the table
+- "DEFAULT expr" - define the default value to a column
+                   (if none was provided inside the \93INSERT\94 command
+- "column_name"  \96 the column name
+- "datatype"     \96 column data type -and- column data length
+- "column_constraint" \96 integrity constraint, as part of column definition.
+- "table_ constraint" \96 as part of Table definition
+
+
+.
+.
+- RULES for tables name -and- column names.
+-- table/column name must begin with a character (latter character: a-Z, A-Z)
+-- table/column max length is 30 character
+-- legal character are: A-Z, a-z, 0-9,_,$,#.
+-- table name must be unique
+-- we cannot use names that are reserved name/s by/in DB (database)
+
+
+.
+.
+- DATATYPE - column data type -and- column data length
+
+-- supported basic data type in table database are:
+   number, character, date, and a type for dealing with binary.
+
+-- example: data type supported by oracel:
+
+type             description
+--------------   -------------------------------------------------------
+CHAR(size)       character string with fixed length
+VARCHAR2(size)   character string with dynamic size/length,
+                 until maximum size of 4,000 character
+NUMBER(p,s)      number character (number variable)
+                 p \96 number of character (number type) (xxx.)
+                 s \96 number of character after the decimal number (.xxx)
+DATE             variable the contain date value.
+                 From: 1/1/4712 BC
+                 To:  31/12/4712 AC
+
+LONG             string variable (max size 2 GigaBytes)
+                 Allowed only one per table.
+
+RAW, LONG RAW    Binary data variable.
+--------------   -------------------------------------------------------
+
+
+.
+.
+- CONSTRAINTS \96 Table level rules
+
+-- we can  use CONSTRAINTS as table level rules
+   for/to force Table rules in terms of
+   INSERT, UPDATE, DELETE a record from Table.
+
+-- To prevent Table DELETE (delete/erase a table)
+   if other table depend on it (on this table).
+
+
+CONSTRAINTS      description
+-------------    ----------------------------------------------------------------
+NOT  NULL        define this column as NOT NULL
+UNIQUE           define this column/s  as UNIQUE.
+                 column value must be unique, for all record/s in the table
+                 and cannot receive NULL value.
+PRIMARY KEY      define this column/s, that identify in one way record in table
+FOREIGN KEY      create and force connection between column/s in one table
+                 and column in other table
+CHECK            define a condition that must be execute/submit
+
+
+
+- CONSTRAINTS \96 giving name/s to a CONSTRAINTS
+
+-- we need to set standard name giving system to \93CONSTRAINTS\94
+   for identify them by the name.
+
+-- example:
+   <table_name>_<column_name>_<constraint_type>
+
+
+
+- CONSTRAINTS define level to a CONSTRAINTS
+
+-- we can define a CONSTRAINTS in two/2 level/s.
+
+definition level   description
+----------------   --------------------------------------------------------------
+column level       set to a specific column, and defined next to the column
+                   can be for every Constraint.
+----------------   --------------------------------------------------------------
+table level        set to a column -or- number of columns
+                   and defined separately from the Table column definition.
+                   Can be any Constraint except \93NOT NULL\94.
+----------------   --------------------------------------------------------------
+
+
+-- Constraint COLUMN  level - command structure
+   //
+   // column [CONSTRAINT constraint_name] constraint_type
+   //
+
+-- Constraint TABLE level - command structure
+   //
+   // [CONSTRAINT constraint_name] constraint_type(column,[column...])
+   //
+
+
+.
+.
+- CONSTRAINTS \96 "NOT NULL" CONSTRAINTS.
+
+-- this column is set  to none NULL value (NOT NULL).
+-- this defined as column level (only)
+
+-- example: create worker table.
+
+CREATE TABLE employees
+(id          NUMBER(7),
+ last_name   VARCHAR2(25)
+ CONSTRAINT  employees_last_name_nn Not NULL,...
+)
+
+
+.
+.
+- CONSTRAINTS \96 UNIQUE CONSTRAINTS.
+
+-- set  table column/s value to a single value value column
+-- NULL value is permitted/okay
+-- column level definition -or-
+   table level definition (when it's defined on some column.
+
+-- example: create a \93department\94 table
+
+CREATE TABLE department
+(id          NUMBER(7),
+ name        VARCHAR2(25)
+ CONSTRAINT  department_name_nn NOT NULL,
+ region_id   NUMBER(7),
+ CONSTRAINT  department_id_pk PRIMARY KEY (id),
+ CONSTRAINT  department_name_region_id_uk
+ UNIQUE      (name, region_id)
+);
+
+
+.
+.
+- CONSTRAINTS \96 PRIMARY KEY CONSTRAINTS .
+
+-- define a column/s that seek/look-for a value in a record table.
+   and force unique value to column/s.
+
+-- we can define only one \93primary key\94 per a table.
+
+-- don't allow \93NULL\94 value on any part of the \93primary key\94.
+
+-- defined as Column level -or- Table level (when it defined on some/few column)
+
+
+
+
+
+---cp----
+---8.7---
+make example in example folder.
+
+
+----------VVVVV------------------
+
+
+SELECT UnitPrice
+FROM Products ;
+
+
+SELECT FLOOR(UnitPrice)
+FROM Products ;
+
+
+SELECT year(HireDate)
+FROM Employees ;
+SELECT day(HireDate)
+FROM Employees ;
+
+
+SELECT *
+FROM Products ;
+
+
+SELECT *
+FROM products ;
+
+
+SELECT *
+FROM Categories ;
+
+
+SELECT *
+FROM suppliers ;
+
+
+SELECT ProductName , CategoryName
+FROM Products JOIN Categories
+ON Products.CategoryID = Categories.CategoryID ;
+
+
+SELECT pro.ProductName, Cat.CategoryID, cat.CategoryName
+FROM Products pro JOIN Categories cat
+ON Pro.CategoryID = Cat.CategoryID ;
+
+
+SELECT pro.ProductName, Cat.CategoryID, cat.CategoryName , Sup.supplierID
+FROM Products pro JOIN Categories cat
+ON Pro.CategoryID = Cat.CategoryID
+JOIN Suppliers sup
+ON Sup.supplierID = pro.supplierID;
+
+
+SELECT *
+FROM Customers ;
+
+
+SELECT *
+FROM Orders ;
+
+
+SELECT cus.customerID , ord.OrderID
+FROM customers cus JOIN orders ord
+ON cus.customerID = ord.customerID ;
+
+
+SELECT cus.customerID , ord.OrderID
+FROM customers cus LEFT OUTER JOIN orders ord
+ON cus.customerID = ord.customerID
+WHERE ord.OrderID IS NULL ;
+
+
+SELECT *
+FROM Employees ;
+
+
+SELECT *
+FROM Employees
+WHERE BirthDate > '1958-01-01' ;
+
+
+SELECT *
+FROM Employees
+WHERE BirthDate > (SELECT BirthDate
+                   FROM Employees
+                   WHERE EmployeeID = 8) ;
+
+
+SELECT *
+FROM Employees
+WHERE BirthDate > (SELECT HireDate
+                   FROM Employees
+                   WHERE EmployeeID = 8) ;
+
+
+SELECT *
+FROM products ;
+
+
+SELECT ProductName
+FROM products
+WHERE UnitPrice > ALL 	(SELECT UnitPrice
+						FROM Products
+						WHERE CategoryID IN(2,3))
+
+
+SELECT ProductName
+FROM products
+WHERE UnitPrice > ANY 	(SELECT UnitPrice
+						FROM Products
+						WHERE CategoryID IN(2,3))
+
+
+
+SELECT ProductName
+FROM products
+WHERE UnitPrice = ANY 	(SELECT UnitPrice
+						FROM Products
+						WHERE CategoryID IN(2,3))
+
+
+
+SELECT *
+FROM Suppliers ;
+
+
+SELECT ContactName , ISNULL (region , 'No Region') AS Region
+FROM Suppliers ;

@@ -1,0 +1,29 @@
+[DataBase] -
+a DataBase is a collection of data with data access in efficient way.
+
+
+[DataBase - TABLE] -
+a DataBase table store/display relevant information/data in a structured format (columns and rows).
+a DataBase often contain multiple TABLES, each TABLE
+
+---------------------------------
+example:
+---------------------------------
+table name: PhoneList
+table column: FirstName, LastName, TelephoneNumber
+
+
+[DataBase TABLE - Primary Keys]
+a primary key is a field/column in table that uniquely identifies the table record/s.
+a primary key must contain a unique value in a field/column for each row in the table.
+
+-!- table are limited to one/1 primary key each.
+-!- the primary key value must be different value in one column for each row.
+
+---------------------------------
+example: index as primary key
+---------------------------------
+[index], [FirstName], [LastName], [TelephoneNumber]
+1, John, Doe, 03-123-1234
+2, eli, doe, 02-321-4321
+3, eli, lee, 05-444-3333

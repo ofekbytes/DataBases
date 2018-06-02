@@ -1,0 +1,306 @@
+SELECT *
+FROM Employees ;
+
+
+SELECT FirstName
+FROM Employees ;
+
+
+SELECT LastName , FirstName
+FROM Employees ;
+
+
+SELECT *
+FROM Products ;
+
+
+SELECT CategoryID
+FROM Products ;
+
+
+SELECT distinct CategoryID
+FROM Products ;
+
+
+SELECT UnitPrice, distinct CategoryID
+FROM Products ;
+
+
+SELECT distinct lastName , FirstName
+FROM employees ;
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID = 3 ;
+
+
+SELECT *
+FROM Employees
+WHERE FirstName = 'nancy' ;
+
+
+SELECT *
+FROM Employees
+WHERE BirthDate = '1948-12-08' ;
+
+
+SELECT *
+FROM Employees
+WHERE LastName LIKE 'f%' ;
+
+
+SELECT *
+FROM Employees
+WHERE LastName LIKE '%r' ;
+
+
+SELECT *
+FROM Employees
+WHERE LastName LIKE '%e%' ;
+
+
+SELECT *
+FROM Employees
+WHERE LastName LIKE '%k%' ;
+
+
+SELECT *
+FROM Employees
+WHERE LastName LIKE '%_k%' ;
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 6 ;
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 6
+AND
+FirstName LIKE 'j%';
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 6
+OR
+EmployeeID = 8;
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 6
+AND
+EmployeeID = 8;
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 8
+ORDER BY FirstName ;
+
+
+SELECT *
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 8
+ORDER BY FirstName DESC;
+
+
+SELECT TitleOfCourtesy , LastName
+FROM Employees
+WHERE EmployeeID BETWEEN 3 AND 8
+ORDER BY TitleOfCourtesy ,  LastName DESC ;
+
+
+SELECT TOP 3 *
+FROM Employees ;
+
+
+SELECT *
+FROM Products ;
+
+
+SELECT TOP 3 *
+FROM Products
+ORDER BY UnitPrice DESC;
+
+
+SELECT UPPER(firstName)
+FROM Employees ;
+
+
+SELECT LOWER(firstName)
+FROM Employees ;
+
+
+SELECT firstName , LEN(firstName) AS 'nam leng'
+FROM Employees
+ORDER BY 'nam leng';
+
+
+SELECT UnitPrice
+FROM Products ;
+
+
+SELECT FLOOR(UnitPrice)
+FROM Products ;
+
+
+SELECT year(HireDate)
+FROM Employees ;
+
+
+SELECT day(HireDate)
+FROM Employees ;
+
+
+SELECT *
+FROM Products ;
+
+
+SELECT AVG(UnitPrice)
+FROM Products ;
+
+
+SELECT SUM(UnitPrice)
+FROM Products ;
+
+
+SELECT MIN(UnitPrice)
+FROM Products ;
+
+
+SELECT MAX(UnitPrice)
+FROM Products ;
+
+
+SELECT COUNT(UnitPrice)
+FROM Products ;
+
+
+SELECT COUNT( distinct UnitPrice)
+FROM Products ;
+
+
+SELECT CategoryID , AVG(UnitPrice)
+FROM Products
+GROUP BY CategoryID;
+
+
+SELECT  AVG(UnitPrice)
+FROM Products
+GROUP BY CategoryID;
+
+
+SELECT CategoryID , AVG(UnitPrice)
+FROM Products
+GROUP BY CategoryID
+HAVING AVG(UnitPrice) > 30  ;
+
+
+SELECT *
+FROM products ;
+
+
+SELECT *
+FROM Categories ;
+
+
+SELECT *
+FROM suppliers ;
+
+
+SELECT ProductName , CategoryName
+FROM Products JOIN Categories
+ON Products.CategoryID = Categories.CategoryID ;
+
+
+SELECT pro.ProductName, Cat.CategoryID, cat.CategoryName
+FROM Products pro JOIN Categories cat
+ON Pro.CategoryID = Cat.CategoryID ;
+
+
+SELECT pro.ProductName, Cat.CategoryID, cat.CategoryName , Sup.supplierID
+FROM Products pro JOIN Categories cat
+ON Pro.CategoryID = Cat.CategoryID
+JOIN Suppliers sup
+ON Sup.supplierID = pro.supplierID;
+
+
+SELECT *
+FROM Customers ;
+
+
+SELECT *
+FROM Orders ;
+
+
+SELECT cus.customerID , ord.OrderID
+FROM customers cus JOIN orders ord
+ON cus.customerID = ord.customerID ;
+
+
+SELECT cus.customerID , ord.OrderID
+FROM customers cus LEFT OUTER JOIN orders ord
+ON cus.customerID = ord.customerID
+WHERE ord.OrderID IS NULL ;
+
+
+SELECT *
+FROM Employees ;
+
+
+SELECT *
+FROM Employees
+WHERE BirthDate > '1958-01-01' ;
+
+
+SELECT *
+FROM Employees
+WHERE BirthDate > (SELECT BirthDate
+                   FROM Employees
+                   WHERE EmployeeID = 8) ;
+
+
+SELECT *
+FROM Employees
+WHERE BirthDate > (SELECT HireDate
+                   FROM Employees
+                   WHERE EmployeeID = 8) ;
+
+
+SELECT *
+FROM products ;
+
+
+SELECT ProductName
+FROM products
+WHERE UnitPrice > ALL 	(SELECT UnitPrice
+						FROM Products
+						WHERE CategoryID IN(2,3))
+
+
+SELECT ProductName
+FROM products
+WHERE UnitPrice > ANY 	(SELECT UnitPrice
+						FROM Products
+						WHERE CategoryID IN(2,3))
+
+
+
+SELECT ProductName
+FROM products
+WHERE UnitPrice = ANY 	(SELECT UnitPrice
+						FROM Products
+						WHERE CategoryID IN(2,3))
+
+
+
+SELECT *
+FROM Suppliers ;
+
+
+SELECT ContactName , ISNULL (region , 'No Region') AS Region
+FROM Suppliers ;

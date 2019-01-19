@@ -1,0 +1,29 @@
+
+---[calendar.log]-----------------------------------------------
+
+CREATE TABLE `calendar`.`log` (
+  `idlog` INT NOT NULL COMMENT 'id',
+  `date` DATE NULL COMMENT 'date',
+  `time` VARCHAR(45) NULL COMMENT 'time',
+  `SoftwareName` VARCHAR(45) NULL COMMENT 'software name that send the message\n',
+  `messageType` VARCHAR(45) NULL COMMENT 'message number',
+  `messageNumber` VARCHAR(45) NULL COMMENT 'messqage - what is the message\n',
+  `message` VARCHAR(200) NULL,
+  `dateCreated` DATETIME NULL,
+  `dateUpdated` DATETIME NULL,
+  `comment` VARCHAR(100) NULL,
+  PRIMARY KEY (`idlog`));
+
+---------------------------------------------------------------
+
+
+date/time/datetime -- default format 
+
+### not working ###
+
+## dd/mm/yyyy ##
+INSERT INTO `calendar`.`log` (`idlog`, `date`, `time`, `SoftwareName`, `messageType`, `messageNumber`, `message`, `dateCreated`, `dateUpdated`, `comment`) VALUES ('', '19/01/2019', '19:31', 'test', 'info', '112221', 'info test', '19/01/2019', '19/01/2019', 'info test');
+
+## mm/dd/yyyy ##
+INSERT INTO `calendar`.`log` (`idlog`, `date`, `time`, `SoftwareName`, `messageType`, `messageNumber`, `message`, `dateCreated`, `dateUpdated`, `comment`) VALUES ('', '01/19/2019', '19:31', 'test', 'info', '112221', 'info test', '01/19/2019', '01/19/2019', 'info test');
+

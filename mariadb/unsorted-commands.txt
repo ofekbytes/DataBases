@@ -1,0 +1,222 @@
+
+
+#
+## Create DataBase "test1" ##
+#
+$ CREATE DATABASE test1;
+
+
+
+#
+## show DataBase List ##
+#
+$ show databases;
+  +--------------------+
+  | Database           |
+  +--------------------+
+  | information_schema |
+  | mysql              |
+  | performance_schema |
+  | test1              |
+  +--------------------+
+  4 rows in set (0.00 sec)
+
+
+#
+## choose a DataBase "test" ## 
+#
+$ use test1;
+  Database changed
+
+
+#
+## show DataBase Table List ##
+#
+$ show tables;
+  Empty set (0.00 sec)
+
+
+#
+## Create DataBase Table "customer" ##
+#
+$ CREATE TABLE customer(first_name VARCHAR(30) NOT NULL, last_name VARCHAR(30) NOT NULL, phone VARCHAR(20) NOT NULL, cust_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY);
+
+
+#
+## show DataBase Table List ##
+#
+$ show tables;
++-----------------+
+| Tables_in_test1 |
++-----------------+
+| customer        |
++-----------------+
+1 row in set (0.00 sec)
+
+
+#
+## show DataBase Table columns/fields ##
+#
+$ show columns from test1.customer;
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| first_name | varchar(30)      | NO   |     | NULL    |                |
+| last_name  | varchar(30)      | NO   |     | NULL    |                |
+| phone      | varchar(20)      | NO   |     | NULL    |                |
+| cust_id    | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
++------------+------------------+------+-----+---------+----------------+
+
+
+
+#
+## Create User and password ##
+#
+CREATE USER 'new-user-name'@'localhost' IDENTIFIED BY 'password';
+
+
+#
+## Change/Update root password in mysql console ##
+#
+$ UPDATE mysql.user SET Password=PASSWORD('NEWPW') WHERE User='root';
+
+
+#
+## Change/Update "user-name-jron" password in mysql console ##
+#
+$ UPDATE mysql.user SET Password=PASSWORD('NEWPassWord') WHERE User='jron';
+
+
+#
+## show user information ##
+#
+$ select * from mysql.user where user='user-name';
+
+
+#
+## show user "dbadmin" information ##
+#
+$ select User, Select_priv, Insert_priv, Update_priv, Delete_priv from mysql.user where user='dbadmin';
++---------+-------------+-------------+-------------+-------------+
+| User    | Select_priv | Insert_priv | Update_priv | Delete_priv |
++---------+-------------+-------------+-------------+-------------+
+| dbadmin | N           | N           | N           | N           |
++---------+-------------+-------------+-------------+-------------+
+1 row in set (0.00 sec)
+
+
+#
+## grant permission to the user information ##
+#
+$ GRANT ALL PRIVILEGES ON test1.customer TO 'user-name'@'localhost' IDENTIFIED BY 'new-password';
+
+## dbadmin
+$ GRANT ALL PRIVILEGES ON test1.customer TO 'dbadmin'@'localhost' IDENTIFIED BY '2Wsxcde3';
+
+
+#
+## revoke permission to the user and drop (remove) the user ##
+#
+$ REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'yron'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+$ DROP USER 'yron'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+## insert ##
+INSERT INTO CUSTOMER (first_name, last_name, phone, cust_id) VALUES ('shalom', 'lizrovitch', '03-689-1111', NULL)
+
+select * from customer;
++------------+-------------+-------------+---------+
+| first_name | last_name   | phone       | cust_id |
++------------+-------------+-------------+---------+
+| shalom     | lizrovitch  | 03-689-1111 |       1 |
+| sh         | it          | 393         |       2 |
+| t1         | t1          | 03-689-1111 |       3 |
+| t1         | t1          | 03-689-1111 |       4 |
+| t1         | t1          | 03-689-1111 |       5 |
+| shalom     | lee         | 433487      |       6 |
+| shalom     | lizerovitch | 03-689-5421 |       7 |
+| shalom     | lizerovitch | 03-689-5421 |       8 |
+| shalom     | lizerovitch | 03-689-5421 |       9 |
+| shalom     | lee         | 433487      |      10 |
+| noam       | kessler     | 03-1111-222 |      11 |
++------------+-------------+-------------+---------+
+11 rows in set (0.00 sec)
+
+#
+## delete a record ##
+#
+$ DELETE FROM test1.customer where cust_id=11;
+Query OK, 1 row affected (0.06 sec)
+
+$ select * from customer;
++------------+-------------+-------------+---------+
+| first_name | last_name   | phone       | cust_id |
++------------+-------------+-------------+---------+
+| shalom     | lizrovitch  | 03-689-1111 |       1 |
+| sh         | it          | 393         |       2 |
+| t1         | t1          | 03-689-1111 |       3 |
+| t1         | t1          | 03-689-1111 |       4 |
+| t1         | t1          | 03-689-1111 |       5 |
+| shalom     | lee         | 433487      |       6 |
+| shalom     | lizerovitch | 03-689-5421 |       7 |
+| shalom     | lizerovitch | 03-689-5421 |       8 |
+| shalom     | lizerovitch | 03-689-5421 |       9 |
+| shalom     | lee         | 433487      |      10 |
++------------+-------------+-------------+---------+
+10 rows in set (0.00 sec)
+
+#
+## delete some record ##
+#
+$ DELETE FROM test1.customer where cust_id>1 and cust_id <=10;
+Query OK, 9 rows affected (0.03 sec)
+
+$ select * from customer;
++------------+------------+-------------+---------+
+| first_name | last_name  | phone       | cust_id |
++------------+------------+-------------+---------+
+| shalom     | lizrovitch | 03-689-1111 |       1 |
++------------+------------+-------------+---------+
+1 row in set (0.00 sec)
+
+
+
+#
+## show record before update ##
+#
+select * from test1.customer;
++------------+------------+-------------+---------+
+| first_name | last_name  | phone       | cust_id |
++------------+------------+-------------+---------+
+| shalom     | lizrovitch | 03-689-1111 |       1 |
+| yaron      | kessler    | 03-503-1731 |      12 |
++------------+------------+-------------+---------+
+2 rows in set (0.00 sec)
+
+
+#
+## update a record ##
+#
+UPDATE test1.customer SET phone='03-689-5421', cust_id=2 where cust_id=12;
+
+
+#
+## show record before update ##
+#
+select * from customer;
++------------+------------+-------------+---------+
+| first_name | last_name  | phone       | cust_id |
++------------+------------+-------------+---------+
+| shalom     | lizrovitch | 03-689-1111 |       1 |
+| yaron      | kessler    | 03-689-5421 |       2 |
++------------+------------+-------------+---------+
+
+
+
+
+

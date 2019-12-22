@@ -1,0 +1,7 @@
+
+
+---[mariadb]---
+
+DCL
+DML
+

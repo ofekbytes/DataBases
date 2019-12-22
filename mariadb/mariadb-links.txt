@@ -1,0 +1,9 @@
+
+
+---[mariadb-links]---
+
+https://www.tutorialspoint.com/mysql/mysql-delete-query.htm
+
+
+
+ 
